@@ -39,3 +39,11 @@ Feature: User API
     When I send a GET request to get user tags
     Then the tags response status code should be 200
     And the response should contain user tags
+
+  @api
+  @negative
+  Scenario: Get user with invalid ID
+
+    Given I have an invalid user ID
+    When I send a GET request to get the invalid user
+    Then the response status code should be 404

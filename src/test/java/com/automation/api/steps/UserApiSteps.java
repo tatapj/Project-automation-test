@@ -272,4 +272,29 @@ public class UserApiSteps {
     public void theResponseShouldContainUserTags() {
         assertNotNull(response.jsonPath().get("data"));
     }
+
+    // =========================
+    // NEGATIVE CASE - GET USER
+    // =========================
+
+    @Given("I have an invalid user ID")
+    public void iHaveAnInvalidUserId() {
+        userId = "000000000000000000000000";
+    }
+
+    @When("I send a GET request to get the invalid user")
+    public void iSendAGetRequestToGetTheInvalidUser() {
+        response = given()
+                .header("app-id", appId)
+                .when()
+                .get(baseUrl + "/user/" + userId);
+
+        response.then().log().all();
+    }
+
+    @Then("the response status code should be 404")
+    public void theResponseStatusCodeShouldBe404() {
+        assertEquals(404, response.getStatusCode());
+    }
+
 }
